@@ -81,6 +81,7 @@ export class PCardPayloadMapper implements GenericLicenseMapper {
           data,
           rawData: JSON.stringify(t),
           metadata: {
+            userId: t.kennitala ?? undefined,
             licenseNumber: t.malsnumer?.toString() ?? '',
             licenseId: DEFAULT_LICENSE_ID,
             expired,

@@ -130,6 +130,7 @@ export type GenericUserLicenseMetaLinks = {
 
 export type GenericUserLicenseMetadata = {
   links?: GenericUserLicenseMetaLinks[]
+  userId?: string
   licenseId?: string
   licenseNumber: string
   expired: boolean | null

@@ -83,6 +83,7 @@ export class EHICCardPayloadMapper implements GenericLicenseMapper {
           data,
           rawData: JSON.stringify(t),
           metadata: {
+            userId: t.cardHolderNationalId ?? undefined,
             licenseNumber: t.cardNumber?.toString() ?? '',
             licenseId: t.cardNumber?.toString() ?? 'default',
             expired,

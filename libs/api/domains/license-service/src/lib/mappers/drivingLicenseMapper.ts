@@ -99,6 +99,7 @@ export class DrivingLicensePayloadMapper implements GenericLicenseMapper {
           metadata: {
             licenseNumber: t.id?.toString() ?? '',
             licenseId: DEFAULT_LICENSE_ID,
+            userId: t.socialSecurityNumber ?? undefined,
             expired,
             expireDate: t.dateValidTo?.toISOString() ?? undefined,
             links: [

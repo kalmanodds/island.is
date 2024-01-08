@@ -23,12 +23,14 @@ export class PassportPayloadMapper implements GenericLicenseMapper {
   ): Array<GenericUserLicensePayload> {
     if (!payload) return []
 
-    const typedPayload = payload as Array<Passport>
+    const typedPayload = payload as Passport
     const label = labels?.labels
+
+    const userPassport = typedPayload.
 
     const mappedPayload: Array<GenericUserLicensePayload> = typedPayload.map(
       (t) => {
-        const expired = t.gildistimi
+        const expired = t.u
           ? !isAfter(new Date(t.gildistimi.toISOString()), new Date())
           : null
 

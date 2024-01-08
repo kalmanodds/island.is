@@ -20,6 +20,7 @@ import { DrivingLicensePayloadMapper } from '../../../license-service/src/lib/ma
 import { LicenseClientModule } from '@island.is/clients/license-client'
 import { PCardPayloadMapper } from '../../../license-service/src/lib/mappers/pCardMapper'
 import { EHICCardPayloadMapper } from '../../../license-service/src/lib/mappers/ehicCardMapper'
+import { PassportPayloadMapper } from './mappers/passportMapper'
 
 export const AVAILABLE_LICENSES: GenericLicenseMetadata[] = [
   {
@@ -123,6 +124,7 @@ export const AVAILABLE_LICENSES: GenericLicenseMetadata[] = [
           driving: DrivingLicensePayloadMapper,
           pCard: PCardPayloadMapper,
           ehic: EHICCardPayloadMapper,
+          passport: PassportPayloadMapper,
         ) =>
         async (
           type: GenericLicenseType,
