@@ -510,8 +510,8 @@
       "@island.is/clients-rsk-relationships": [
         "libs/clients/rsk/relationships/src/index.ts"
       ],
-      "@island.is/clients/student-assessments": [
-        "libs/clients/student-assessments/src/index.ts"
+      "@island.is/clients-student-licenses": [
+        "libs/clients/student-licenses/src/index.ts"
       ],
       "@island.is/clients/administration-of-occupational-safety-and-health": [
         "libs/clients/administration-of-occupational-safety-and-health/src/index.ts"
@@ -671,6 +671,9 @@
         "libs/clients/social-insurance-administration/src/index.ts"
       ],
       "@island.is/clients/statistics": ["libs/clients/statistics/src/index.ts"],
+      "@island.is/clients/student-assessments": [
+        "libs/clients/student-assessments/src/index.ts"
+      ],
       "@island.is/clients/syslumenn": ["libs/clients/syslumenn/src/index.ts"],
       "@island.is/clients/transport-authority/digital-tachograph-drivers-card": [
         "libs/clients/transport-authority/digital-tachograph-drivers-card/src/index.ts"
