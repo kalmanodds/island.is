@@ -510,6 +510,9 @@
       "@island.is/clients-rsk-relationships": [
         "libs/clients/rsk/relationships/src/index.ts"
       ],
+      "@island.is/clients/student-assessments": [
+        "libs/clients/student-assessments/src/index.ts"
+      ],
       "@island.is/clients/administration-of-occupational-safety-and-health": [
         "libs/clients/administration-of-occupational-safety-and-health/src/index.ts"
       ],
