@@ -9,6 +9,8 @@ import type { Attachment, Period } from '@island.is/clients/vmst'
 import {
   ParentalLeaveApi,
   ApplicationInformationApi,
+  UnionApi,
+  PensionApi,
 } from '@island.is/clients/vmst'
 import type { Logger } from '@island.is/logging'
 import { LOGGER_PROVIDER } from '@island.is/logging'
@@ -79,6 +81,10 @@ import { BaseTemplateApiService } from '../../base-template-api.service'
 import { ChildrenService } from './children/children.service'
 import { NationalRegistryClientService } from '@island.is/clients/national-registry-v2'
 
+const isRunningInDevelopment = !(
+  process.env.PROD_MODE === 'true' || process.env.NODE_ENV === 'production'
+)
+
 interface VMSTError {
   type: string
   title: string
@@ -110,6 +116,8 @@ export class ParentalLeaveService extends BaseTemplateApiService {
   constructor(
     @Inject(LOGGER_PROVIDER) private logger: Logger,
     private parentalLeaveApi: ParentalLeaveApi,
+    private unionApi: UnionApi,
+    private pensionApi: PensionApi,
     private applicationInformationAPI: ApplicationInformationApi,
     private readonly sharedTemplateAPIService: SharedTemplateApiService,
     @Inject(APPLICATION_ATTACHMENT_BUCKET)
@@ -1589,5 +1597,27 @@ export class ParentalLeaveService extends BaseTemplateApiService {
       this.logger.error('Failed to validate the parental leave application', e)
       throw this.parseErrors(e as VMSTError)
     }
+  }
+
+  async getUnions() {
+    return isRunningInDevelopment
+      ? [
+          { id: 'F511', name: 'VR' },
+          { id: 'F512', name: 'Verslunarmannafélag Hafnarfjarðar' },
+          { id: 'F999', name: 'Bandalag háskólamanna (BHM)' },
+        ]
+      : await this.unionApi.unionGetUnions()
+  }
+
+  async getPensionFunds() {
+    return isRunningInDevelopment
+      ? [
+          { id: 'L030', name: 'Starfsmenn Akureyrarbæjar' },
+          { id: 'L050', name: 'Starfsmenn Hafnafjarðarbæjar' },
+          { id: 'L860', name: 'VR' },
+          { id: 'X135', name: 'Frjálsi' },
+          { id: 'X821', name: 'Lífsverk' },
+        ]
+      : await this.pensionApi.pensionGetPensionFunds()
   }
 }

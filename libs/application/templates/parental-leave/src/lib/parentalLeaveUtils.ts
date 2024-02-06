@@ -35,6 +35,7 @@ import {
   States,
   TransferRightsOption,
   YES,
+  PensionFundType,
 } from '../constants'
 import { TimelinePeriod } from '../fields/components/Timeline/Timeline'
 import { SchemaFormValues } from '../lib/dataSchema'
@@ -69,6 +70,7 @@ import {
   Period,
   PersonInformation,
   PregnancyStatusAndRightsResults,
+  SelectOption,
   VMSTPeriod,
   YesOrNo,
 } from '../types'
@@ -560,6 +562,21 @@ export function getApplicationExternalData(
     'userProfile.data.mobilePhoneNumber',
   ) as string
 
+  const funds = getValueViaPath(
+    externalData,
+    'pensionFunds.data',
+  ) as SelectOption[]
+
+  const pensionFunds = funds?.filter((pensionFund) =>
+    pensionFund.id.startsWith(PensionFundType.required),
+  ) as SelectOption[]
+
+  const privatePensionFunds = funds?.filter((privatePensionFund) =>
+    privatePensionFund.id.startsWith(PensionFundType.private),
+  ) as SelectOption[]
+
+  const unions = getValueViaPath(externalData, 'unions.data') as SelectOption[]
+
   const applicantGenderCode = getValueViaPath(
     externalData,
     'person.data.genderCode',
@@ -596,6 +613,9 @@ export function getApplicationExternalData(
     userEmail,
     userPhoneNumber,
     dateOfBirth,
+    pensionFunds,
+    privatePensionFunds,
+    unions,
   }
 }
 

@@ -22,7 +22,6 @@ export { default as PeriodsSectionImage } from './PeriodsSectionImage/PeriodsSec
 export { default as ExistingApplications } from './ExistingApplications'
 export { default as EditsInReviewSteps } from './InReviewSteps/EditsInReviewSteps'
 export { default as EditsRequireAction } from './EditsRequireAction'
-export { default as EmployerApprovalExtraInformation } from './EmployerApprovalExtraInformation'
 export { default as UploadAdditionalFilesInfoScreen } from './UploadAdditionalFilesInfoScreen'
 export { default as ImageField } from './ImangeField'
 export { UseUnion } from './UseUnion'

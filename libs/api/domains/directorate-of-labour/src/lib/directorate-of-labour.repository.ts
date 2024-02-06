@@ -65,63 +65,63 @@ export class DirectorateOfLabourRepository {
     return null
   }
 
-  async getUnions(): Promise<Union[]> {
-    if (isRunningInDevelopment) {
-      return [
-        { id: 'F511', name: 'VR' },
-        { id: 'F512', name: 'Verslunarmannafélag Hafnarfjarðar' },
-        { id: 'F999', name: 'Bandalag háskólamanna (BHM)' },
-      ]
-    }
+  // async getUnions(): Promise<Union[]> {
+  //   if (isRunningInDevelopment) {
+  //     return [
+  //       { id: 'F511', name: 'VR' },
+  //       { id: 'F512', name: 'Verslunarmannafélag Hafnarfjarðar' },
+  //       { id: 'F999', name: 'Bandalag háskólamanna (BHM)' },
+  //     ]
+  //   }
 
-    const { unions } = await this.unionApi.unionGetUnions()
+  //   const { unions } = await this.unionApi.unionGetUnions()
 
-    if (unions) {
-      return unions
-    }
+  //   if (unions) {
+  //     return unions
+  //   }
 
-    throw new Error('Could not fetch unions')
-  }
+  //   throw new Error('Could not fetch unions')
+  // }
 
-  private async getAllPensionFunds(): Promise<PensionFund[]> {
-    const { pensionFunds } = await this.pensionApi.pensionGetPensionFunds()
+  // private async getAllPensionFunds(): Promise<PensionFund[]> {
+  //   const { pensionFunds } = await this.pensionApi.pensionGetPensionFunds()
 
-    if (pensionFunds) {
-      return pensionFunds
-    }
+  //   if (pensionFunds) {
+  //     return pensionFunds
+  //   }
 
-    throw new Error('Could not fetch pension funds')
-  }
+  //   throw new Error('Could not fetch pension funds')
+  // }
 
-  async getPensionFunds(): Promise<PensionFund[]> {
-    const pensionFunds = isRunningInDevelopment
-      ? [
-          { id: 'L030', name: 'Starfsmenn Akureyrarbæjar' },
-          { id: 'L050', name: 'Starfsmenn Hafnafjarðarbæjar' },
-          { id: 'L860', name: 'VR' },
-          { id: 'X135', name: 'Frjálsi' },
-        ]
-      : await this.getAllPensionFunds()
+  // async getPensionFunds(): Promise<PensionFund[]> {
+  //   const pensionFunds = isRunningInDevelopment
+  //     ? [
+  //         { id: 'L030', name: 'Starfsmenn Akureyrarbæjar' },
+  //         { id: 'L050', name: 'Starfsmenn Hafnafjarðarbæjar' },
+  //         { id: 'L860', name: 'VR' },
+  //         { id: 'X135', name: 'Frjálsi' },
+  //       ]
+  //     : await this.getAllPensionFunds()
 
-    return pensionFunds.filter((pensionFund) =>
-      pensionFund.id.startsWith(PensionFundType.required),
-    )
-  }
+  //   return pensionFunds.filter((pensionFund) =>
+  //     pensionFund.id.startsWith(PensionFundType.required),
+  //   )
+  // }
 
-  async getPrivatePensionFunds(): Promise<PensionFund[]> {
-    const pensionFunds = isRunningInDevelopment
-      ? [
-          { id: 'L030', name: 'Starfsmenn Akureyrarbæjar' },
-          { id: 'L050', name: 'Starfsmenn Hafnafjarðarbæjar' },
-          { id: 'L860', name: 'VR' },
-          { id: 'X135', name: 'Frjálsi' },
-        ]
-      : await this.getAllPensionFunds()
+  // async getPrivatePensionFunds(): Promise<PensionFund[]> {
+  //   const pensionFunds = isRunningInDevelopment
+  //     ? [
+  //         { id: 'L030', name: 'Starfsmenn Akureyrarbæjar' },
+  //         { id: 'L050', name: 'Starfsmenn Hafnafjarðarbæjar' },
+  //         { id: 'L860', name: 'VR' },
+  //         { id: 'X135', name: 'Frjálsi' },
+  //       ]
+  //     : await this.getAllPensionFunds()
 
-    return pensionFunds.filter((pensionFund) =>
-      pensionFund.id.startsWith(PensionFundType.private),
-    )
-  }
+  //   return pensionFunds.filter((pensionFund) =>
+  //     pensionFund.id.startsWith(PensionFundType.private),
+  //   )
+  // }
 
   async getParentalLeavesEntitlements(
     dateOfBirth: Date,

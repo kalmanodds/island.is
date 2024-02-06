@@ -25,15 +25,16 @@ import {
   YES,
 } from '../../../constants'
 import { coreErrorMessages } from '@island.is/application/core'
-import { YesOrNo, parentalLeaveFormMessages } from '../../..'
+import {
+  YesOrNo,
+  getApplicationExternalData,
+  parentalLeaveFormMessages,
+} from '../../..'
 import {
   InputController,
   RadioController,
   SelectController,
 } from '@island.is/shared/form-fields'
-import { useUnion as useUnionOptions } from '../../../hooks/useUnion'
-import { usePrivatePensionFund as usePrivatePensionFundOptions } from '../../../hooks/usePrivatePensionFund'
-import { usePensionFund as usePensionFundOptions } from '../../../hooks/usePensionFund'
 import { getSelectOptionLabel } from '../../../lib/parentalLeaveClientUtils'
 
 export const Payments = ({
@@ -71,13 +72,8 @@ export const Payments = ({
     },
   })
 
-  const pensionFundOptions = usePensionFundOptions()
-  const privatePensionFundOptions = usePrivatePensionFundOptions().filter(
-    ({ value }) => value !== NO_PRIVATE_PENSION_FUND,
-  )
-  const unionOptions = useUnionOptions().filter(
-    ({ value }) => value !== NO_UNION,
-  )
+  const { pensionFunds, privatePensionFunds, unions } =
+    getApplicationExternalData(application.externalData)
 
   const saveApplication = async () => {
     await updateApplication({
@@ -176,7 +172,10 @@ export const Payments = ({
                 )}
                 name="payments.pensionFund"
                 id="payments.pensionFund"
-                options={pensionFundOptions}
+                options={pensionFunds.map(({ id, name }) => ({
+                  value: id,
+                  label: name,
+                }))}
                 defaultValue={pensionFund}
                 onSelect={(s) =>
                   setStateful((prev) => ({
@@ -230,7 +229,12 @@ export const Payments = ({
                     )}
                     name="payments.union"
                     id="payments.union"
-                    options={unionOptions}
+                    options={unions
+                      .filter(({ id }) => id !== NO_UNION)
+                      .map(({ id, name }) => ({
+                        value: id,
+                        label: name,
+                      }))}
                     defaultValue={union}
                     onSelect={(s) => {
                       setStateful((prev) => ({
@@ -301,7 +305,12 @@ export const Payments = ({
                         )}
                         name="payments.privatePensionFund"
                         id="payments.privatePensionFund"
-                        options={privatePensionFundOptions}
+                        options={privatePensionFunds
+                          .filter(({ id }) => id !== NO_PRIVATE_PENSION_FUND)
+                          .map(({ id, name }) => ({
+                            value: id,
+                            label: name,
+                          }))}
                         defaultValue={privatePensionFund}
                         onSelect={(s) =>
                           setStateful((prev) => ({
@@ -366,7 +375,7 @@ export const Payments = ({
                   label={formatMessage(
                     parentalLeaveFormMessages.shared.salaryLabelPensionFund,
                   )}
-                  value={getSelectOptionLabel(pensionFundOptions, pensionFund)}
+                  value={getSelectOptionLabel(pensionFunds, pensionFund)}
                 />
               </GridColumn>
             </GridRow>
@@ -388,7 +397,7 @@ export const Payments = ({
                     label={formatMessage(
                       parentalLeaveFormMessages.shared.union,
                     )}
-                    value={getSelectOptionLabel(unionOptions, union)}
+                    value={getSelectOptionLabel(unions, union)}
                   />
                 </GridColumn>
               </GridRow>
@@ -413,7 +422,7 @@ export const Payments = ({
                       parentalLeaveFormMessages.shared.privatePensionFund,
                     )}
                     value={getSelectOptionLabel(
-                      privatePensionFundOptions,
+                      privatePensionFunds,
                       privatePensionFund,
                     )}
                   />

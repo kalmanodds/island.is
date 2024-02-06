@@ -29,7 +29,12 @@ import {
   ParentalRelations,
   YES,
 } from '../constants'
-import { ChildrenApi, GetPersonInformation } from '../dataProviders'
+import {
+  ChildrenApi,
+  GetPersonInformation,
+  GetUnions,
+  GetPensionFunds,
+} from '../dataProviders'
 import { errorMessages, parentalLeaveFormMessages } from '../lib/messages'
 import {
   getApplicationAnswers,
@@ -368,6 +373,14 @@ export const PrerequisitesForm: Form = buildForm({
                   subTitle:
                     parentalLeaveFormMessages.shared
                       .childrenInformationSubTitle,
+                }),
+                buildDataProviderItem({
+                  provider: GetUnions,
+                  title: '',
+                }),
+                buildDataProviderItem({
+                  provider: GetPensionFunds,
+                  title: '',
                 }),
               ],
               otherPermissions: [

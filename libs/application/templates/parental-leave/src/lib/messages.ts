@@ -755,10 +755,20 @@ export const parentalLeaveFormMessages: MessageDir = {
       defaultMessage: 'Stéttarfélag',
       description: 'Union',
     },
+    unionValue: {
+      id: 'pl.application:union.value',
+      defaultMessage: '{unionValue}',
+      description: '{unionValue}',
+    },
     salaryLabelPensionFund: {
       id: 'pl.application:salary.label.pensionfund',
       defaultMessage: 'Lífeyrissjóður',
       description: 'Pension fund',
+    },
+    pensionFundValue: {
+      id: 'pl.application:pensionfund.value',
+      defaultMessage: '{pensionFundValue}',
+      description: '{pensionFundValue}',
     },
     salaryLabelTax: {
       id: 'pl.application:salary.label.tax',

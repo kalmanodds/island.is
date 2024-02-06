@@ -62,7 +62,12 @@ import {
   isParentalGrant,
   isParentWithoutBirthParent,
 } from '../lib/parentalLeaveUtils'
-import { ChildrenApi, GetPersonInformation } from '../dataProviders'
+import {
+  ChildrenApi,
+  GetPersonInformation,
+  GetUnions,
+  GetPensionFunds,
+} from '../dataProviders'
 
 export enum PLEvents {
   MODIFY = 'MODIFY',
@@ -202,7 +207,13 @@ const ParentalLeaveTemplate: ApplicationTemplate<
               ],
               write: 'all',
               delete: true,
-              api: [UserProfileApi, GetPersonInformation, ChildrenApi],
+              api: [
+                UserProfileApi,
+                GetPersonInformation,
+                ChildrenApi,
+                GetUnions,
+                GetPensionFunds,
+              ],
             },
           ],
         },
@@ -489,7 +500,13 @@ const ParentalLeaveTemplate: ApplicationTemplate<
                   'noPrimaryParent',
                   'noChildrenFound',
                 ],
-                externalData: ['children', 'navId', 'sendApplication'],
+                externalData: [
+                  'children',
+                  'navId',
+                  'sendApplication',
+                  'unions',
+                  'pensionFunds',
+                ],
               },
               write: {
                 answers: [
@@ -1321,9 +1338,12 @@ const ParentalLeaveTemplate: ApplicationTemplate<
             {
               id: Roles.ASSIGNEE,
               formLoader: () =>
-                import('../forms/EmployerApproveEdits').then((val) =>
-                  Promise.resolve(val.EmployerApproveEdits),
+                import('../forms/EmployerApproval').then((val) =>
+                  Promise.resolve(val.EmployerApproval),
                 ),
+              //   import('../forms/EmployerApproveEdits').then((val) =>
+              //     Promise.resolve(val.EmployerApproveEdits),
+              //   ),
               read: {
                 answers: [
                   'periods',
@@ -1335,7 +1355,13 @@ const ParentalLeaveTemplate: ApplicationTemplate<
                   'noPrimaryParent',
                   'noChildrenFound',
                 ],
-                externalData: ['children', 'navId', 'sendApplication'],
+                externalData: [
+                  'children',
+                  'navId',
+                  'sendApplication',
+                  'unions',
+                  'pensionFunds',
+                ],
               },
               write: {
                 answers: [

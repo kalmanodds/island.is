@@ -120,3 +120,8 @@ export enum FileType {
   EMPPER = 'empper',
   EMPLOYER = 'employer',
 }
+
+export enum PensionFundType {
+  required = 'L',
+  private = 'X',
+}

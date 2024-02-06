@@ -1,8 +1,6 @@
 import addDays from 'date-fns/addDays'
-
 import {
   buildAlertMessageField,
-  buildAsyncSelectField,
   buildCustomField,
   buildDateField,
   buildDescriptionField,
@@ -19,7 +17,6 @@ import {
   NO_ANSWER,
 } from '@island.is/application/core'
 import { Application, Form, FormModes } from '@island.is/application/types'
-
 import { parentalLeaveFormMessages } from '../lib/messages'
 import {
   getAllPeriodDates,
@@ -46,11 +43,6 @@ import {
   getOtherParentOptions,
 } from '../lib/parentalLeaveUtils'
 import {
-  GetPensionFunds,
-  GetUnions,
-  GetPrivatePensionFunds,
-} from '../graphql/queries'
-import {
   FILE_SIZE_LIMIT,
   MANUAL,
   SPOUSE,
@@ -70,11 +62,6 @@ import {
 } from '../constants'
 import Logo from '../assets/Logo'
 import { minPeriodDays } from '../config'
-import {
-  GetPensionFundsQuery,
-  GetPrivatePensionFundsQuery,
-  GetUnionsQuery,
-} from '../types/schema'
 import {
   formatPhoneNumber,
   removeCountryCode,
@@ -270,7 +257,7 @@ export const ParentalLeaveForm: Form = buildForm({
                       }
                     )?.bankInfo,
                 }),
-                buildAsyncSelectField({
+                buildSelectField({
                   condition: (answers) => {
                     const { applicationType } = getApplicationAnswers(answers)
 
@@ -278,22 +265,18 @@ export const ParentalLeaveForm: Form = buildForm({
                   },
                   title: parentalLeaveFormMessages.shared.pensionFund,
                   id: 'payments.pensionFund',
-                  loadingError: parentalLeaveFormMessages.errors.loading,
-                  isSearchable: true,
                   dataTestId: `pension-fund`,
                   placeholder:
                     parentalLeaveFormMessages.shared.asyncSelectSearchableHint,
-                  loadOptions: async ({ apolloClient }) => {
-                    const { data } =
-                      await apolloClient.query<GetPensionFundsQuery>({
-                        query: GetPensionFunds,
-                      })
-
+                  options: (application) => {
+                    const { pensionFunds } = getApplicationExternalData(
+                      application.externalData,
+                    )
                     return (
-                      data?.getPensionFunds?.map(({ id, name }) => ({
-                        label: name,
-                        dataTestId: 'pension-fund-item',
+                      pensionFunds.map(({ id, name }) => ({
                         value: id,
+                        dataTestId: 'pension-fund-item',
+                        label: name,
                       })) ?? []
                     )
                   },
@@ -310,7 +293,7 @@ export const ParentalLeaveForm: Form = buildForm({
                   description:
                     parentalLeaveFormMessages.shared.unionDescription,
                 }),
-                buildAsyncSelectField({
+                buildSelectField({
                   condition: (answers) => {
                     const { applicationType } = getApplicationAnswers(answers)
 
@@ -321,22 +304,19 @@ export const ParentalLeaveForm: Form = buildForm({
                   },
                   title: parentalLeaveFormMessages.shared.union,
                   id: 'payments.union',
-                  loadingError: parentalLeaveFormMessages.errors.loading,
                   dataTestId: 'payments-union',
-                  isSearchable: true,
                   placeholder:
                     parentalLeaveFormMessages.shared.asyncSelectSearchableHint,
-                  loadOptions: async ({ apolloClient }) => {
-                    const { data } = await apolloClient.query<GetUnionsQuery>({
-                      query: GetUnions,
-                    })
-
+                  options: (application) => {
+                    const { unions } = getApplicationExternalData(
+                      application.externalData,
+                    )
                     return (
-                      data?.getUnions
-                        ?.filter(({ id }) => id !== NO_UNION)
+                      unions
+                        .filter(({ id }) => id !== NO_UNION)
                         .map(({ id, name }) => ({
-                          label: name,
                           value: id,
+                          label: name,
                         })) ?? []
                     )
                   },
@@ -355,7 +335,7 @@ export const ParentalLeaveForm: Form = buildForm({
                     parentalLeaveFormMessages.shared
                       .privatePensionFundDescription,
                 }),
-                buildAsyncSelectField({
+                buildSelectField({
                   condition: (answers) => {
                     const { applicationType } = getApplicationAnswers(answers)
 
@@ -366,21 +346,17 @@ export const ParentalLeaveForm: Form = buildForm({
                   },
                   id: 'payments.privatePensionFund',
                   title: parentalLeaveFormMessages.shared.privatePensionFund,
-                  loadingError: parentalLeaveFormMessages.errors.loading,
                   dataTestId: 'private-pension-fund',
-                  isSearchable: true,
-                  loadOptions: async ({ apolloClient }) => {
-                    const { data } =
-                      await apolloClient.query<GetPrivatePensionFundsQuery>({
-                        query: GetPrivatePensionFunds,
-                      })
-
+                  options: (application) => {
+                    const { privatePensionFunds } = getApplicationExternalData(
+                      application.externalData,
+                    )
                     return (
-                      data?.getPrivatePensionFunds
-                        ?.filter(({ id }) => id !== NO_PRIVATE_PENSION_FUND)
+                      privatePensionFunds
+                        .filter(({ id }) => id !== NO_PRIVATE_PENSION_FUND)
                         .map(({ id, name }) => ({
-                          label: name,
                           value: id,
+                          label: name,
                         })) ?? []
                     )
                   },

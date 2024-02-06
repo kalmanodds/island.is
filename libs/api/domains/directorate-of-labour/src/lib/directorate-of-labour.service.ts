@@ -36,23 +36,23 @@ export class DirectorateOfLabourService {
       .catch(this.handleError.bind(this))
   }
 
-  async getUnions(): Promise<Union[]> {
-    return await this.directorateOfLabourRepository
-      .getUnions()
-      .catch(this.handleError.bind(this))
-  }
+  // async getUnions(): Promise<Union[]> {
+  //   return await this.directorateOfLabourRepository
+  //     .getUnions()
+  //     .catch(this.handleError.bind(this))
+  // }
 
-  async getPensionFunds(): Promise<PensionFund[]> {
-    return await this.directorateOfLabourRepository
-      .getPensionFunds()
-      .catch(this.handleError.bind(this))
-  }
+  // async getPensionFunds(): Promise<PensionFund[]> {
+  //   return await this.directorateOfLabourRepository
+  //     .getPensionFunds()
+  //     .catch(this.handleError.bind(this))
+  // }
 
-  async getPrivatePensionFunds(): Promise<PensionFund[]> {
-    return await this.directorateOfLabourRepository
-      .getPrivatePensionFunds()
-      .catch(this.handleError.bind(this))
-  }
+  // async getPrivatePensionFunds(): Promise<PensionFund[]> {
+  //   return await this.directorateOfLabourRepository
+  //     .getPrivatePensionFunds()
+  //     .catch(this.handleError.bind(this))
+  // }
 
   async getParentalLeavesEntitlements(
     dateOfBirth: Date,

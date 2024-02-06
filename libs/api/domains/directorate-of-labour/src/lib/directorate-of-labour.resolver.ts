@@ -118,20 +118,20 @@ export class DirectorateOfLabourResolver {
     )
   }
 
-  @Query(() => [Union], { nullable: true })
-  async getUnions(): Promise<Union[] | null> {
-    return this.directorateOfLabourService.getUnions()
-  }
+  // @Query(() => [Union], { nullable: true })
+  // async getUnions(): Promise<Union[] | null> {
+  //   return this.directorateOfLabourService.getUnions()
+  // }
 
-  @Query(() => [PensionFund], { nullable: true })
-  async getPensionFunds(): Promise<PensionFund[] | null> {
-    return this.directorateOfLabourService.getPensionFunds()
-  }
+  // @Query(() => [PensionFund], { nullable: true })
+  // async getPensionFunds(): Promise<PensionFund[] | null> {
+  //   return this.directorateOfLabourService.getPensionFunds()
+  // }
 
-  @Query(() => [PensionFund], { nullable: true })
-  async getPrivatePensionFunds(): Promise<PensionFund[] | null> {
-    return this.directorateOfLabourService.getPrivatePensionFunds()
-  }
+  // @Query(() => [PensionFund], { nullable: true })
+  // async getPrivatePensionFunds(): Promise<PensionFund[] | null> {
+  //   return this.directorateOfLabourService.getPrivatePensionFunds()
+  // }
 
   @Query(() => PregnancyStatus, { nullable: true })
   async getPregnancyStatus(

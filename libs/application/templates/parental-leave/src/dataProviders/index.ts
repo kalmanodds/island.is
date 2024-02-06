@@ -9,3 +9,13 @@ export const GetPersonInformation = defineTemplateApi({
   action: 'getPerson',
   externalDataId: 'person',
 })
+
+export const GetUnions = defineTemplateApi({
+  action: 'getUnions',
+  externalDataId: 'unions',
+})
+
+export const GetPensionFunds = defineTemplateApi({
+  action: 'getPensionFunds',
+  externalDataId: 'pensionFunds',
+})

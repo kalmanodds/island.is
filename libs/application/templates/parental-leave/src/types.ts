@@ -91,6 +91,11 @@ export interface OtherParentObj {
   otherParentId: string
 }
 
+export interface SelectOption {
+  id: string
+  name: string
+}
+
 interface BaseChildInformation {
   expectedDateOfBirth: string
   hasRights: boolean
