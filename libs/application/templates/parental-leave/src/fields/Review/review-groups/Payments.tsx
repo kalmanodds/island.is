@@ -44,7 +44,7 @@ export const Payments = ({
   hasError,
 }: ReviewGroupProps) => {
   const { formatMessage, locale } = useLocale()
-  const { getValues, setValue } = useFormContext()
+  const { getValues } = useFormContext()
 
   const [
     {
@@ -136,9 +136,9 @@ export const Payments = ({
       canCloseEdit={checkPaymentErrors([
         'payments.bank',
         'payments.pensionFund',
-        'useUnion',
+        'payments.useUnion',
         'payments.union',
-        'usePrivatePensionFund',
+        'payments.usePrivatePensionFund',
         'payments.privatePensionFund',
         'payments.privatePensionFundPercentage',
       ])}
@@ -155,6 +155,7 @@ export const Payments = ({
             name="payments.bank"
             format="####-##-######"
             placeholder="0000-00-000000"
+            backgroundColor="blue"
             defaultValue={bank}
             label={formatMessage(
               parentalLeaveFormMessages.shared.paymentInformationBank,
@@ -176,6 +177,7 @@ export const Payments = ({
                   value: id,
                   label: name,
                 }))}
+                backgroundColor="blue"
                 defaultValue={pensionFund}
                 onSelect={(s) =>
                   setStateful((prev) => ({
@@ -190,8 +192,8 @@ export const Payments = ({
               </Label>
               <Stack space={1}>
                 <RadioController
-                  id="useUnion"
-                  name="useUnion"
+                  id="payments.useUnion"
+                  name="payments.useUnion"
                   defaultValue={useUnion}
                   split="1/2"
                   options={[
@@ -210,11 +212,8 @@ export const Payments = ({
                   ]}
                   onSelect={(s: string) => {
                     setStateful((prev) => {
-                      const union = s === NO ? NO_UNION : ''
-                      setValue('payments.union', union)
                       return {
                         ...prev,
-                        union,
                         useUnion: s as YesOrNo,
                       }
                     })
@@ -235,6 +234,7 @@ export const Payments = ({
                         value: id,
                         label: name,
                       }))}
+                    backgroundColor="blue"
                     defaultValue={union}
                     onSelect={(s) => {
                       setStateful((prev) => ({
@@ -253,8 +253,8 @@ export const Payments = ({
               </Label>
               <Stack space={1}>
                 <RadioController
-                  id="usePrivatePensionFund"
-                  name="usePrivatePensionFund"
+                  id="payments.usePrivatePensionFund"
+                  name="payments.usePrivatePensionFund"
                   defaultValue={usePrivatePensionFund}
                   split="1/2"
                   options={[
@@ -273,81 +273,61 @@ export const Payments = ({
                   ]}
                   onSelect={(s: string) => {
                     setStateful((prev) => {
-                      const privatePensionFund =
-                        s === NO ? NO_PRIVATE_PENSION_FUND : ''
-                      const privatePensionFundPercentage =
-                        s === NO ? '0' : prev.privatePensionFundPercentage
-                      setValue(
-                        'payments.privatePensionFund',
-                        privatePensionFund,
-                      )
-                      setValue(
-                        'payments.privatePensionFundPercentage',
-                        privatePensionFundPercentage,
-                      )
                       return {
                         ...prev,
-                        privatePensionFund,
-                        privatePensionFundPercentage,
                         usePrivatePensionFund: s as YesOrNo,
                       }
                     })
                   }}
-                  error={hasError('usePrivatePensionFund')}
+                  error={hasError('payments.usePrivatePensionFund')}
                 />
 
                 {usePrivatePensionFund === YES && (
-                  <GridRow>
-                    <GridColumn span={['12/12', '12/12', '12/12', '6/12']}>
-                      <SelectController
-                        label={formatMessage(
-                          parentalLeaveFormMessages.shared.privatePensionFund,
-                        )}
-                        name="payments.privatePensionFund"
-                        id="payments.privatePensionFund"
-                        options={privatePensionFunds
-                          .filter(({ id }) => id !== NO_PRIVATE_PENSION_FUND)
-                          .map(({ id, name }) => ({
-                            value: id,
-                            label: name,
-                          }))}
-                        defaultValue={privatePensionFund}
-                        onSelect={(s) =>
-                          setStateful((prev) => ({
-                            ...prev,
-                            privatePensionFund: s.value as string,
-                          }))
-                        }
-                        error={validatePrivatePensionFund()}
-                      />
-                    </GridColumn>
-
-                    <GridColumn
-                      paddingTop={[2, 2, 2, 0]}
-                      span={['12/12', '12/12', '12/12', '6/12']}
-                    >
-                      <SelectController
-                        label={formatMessage(
-                          parentalLeaveFormMessages.shared
-                            .privatePensionFundRatio,
-                        )}
-                        name="payments.privatePensionFundPercentage"
-                        id="payments.privatePensionFundPercentage"
-                        defaultValue={privatePensionFundPercentage}
-                        options={[
-                          { label: '2%', value: '2' },
-                          { label: '4%', value: '4' },
-                        ]}
-                        onSelect={(s) =>
-                          setStateful((prev) => ({
-                            ...prev,
-                            privatePensionFundPercentage: s.value as string,
-                          }))
-                        }
-                        error={validatePrivatePensionFundPercentage()}
-                      />
-                    </GridColumn>
-                  </GridRow>
+                  <Stack space={2}>
+                    <SelectController
+                      label={formatMessage(
+                        parentalLeaveFormMessages.shared.privatePensionFund,
+                      )}
+                      name="payments.privatePensionFund"
+                      id="payments.privatePensionFund"
+                      backgroundColor="blue"
+                      options={privatePensionFunds
+                        .filter(({ id }) => id !== NO_PRIVATE_PENSION_FUND)
+                        .map(({ id, name }) => ({
+                          value: id,
+                          label: name,
+                        }))}
+                      defaultValue={privatePensionFund}
+                      onSelect={(s) =>
+                        setStateful((prev) => ({
+                          ...prev,
+                          privatePensionFund: s.value as string,
+                        }))
+                      }
+                      error={validatePrivatePensionFund()}
+                    />
+                    <SelectController
+                      label={formatMessage(
+                        parentalLeaveFormMessages.shared
+                          .privatePensionFundRatio,
+                      )}
+                      name="payments.privatePensionFundPercentage"
+                      id="payments.privatePensionFundPercentage"
+                      backgroundColor="blue"
+                      defaultValue={privatePensionFundPercentage}
+                      options={[
+                        { label: '2%', value: '2' },
+                        { label: '4%', value: '4' },
+                      ]}
+                      onSelect={(s) =>
+                        setStateful((prev) => ({
+                          ...prev,
+                          privatePensionFundPercentage: s.value as string,
+                        }))
+                      }
+                      error={validatePrivatePensionFundPercentage()}
+                    />
+                  </Stack>
                 )}
               </Stack>
             </>
