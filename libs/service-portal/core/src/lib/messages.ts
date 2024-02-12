@@ -1376,24 +1376,24 @@ export const m = defineMessages({
     defaultMessage: 'Íslenska',
   },
   noDataFoundVariable: {
-    id: 'sp.health:no-data-found',
+    id: 'service.portal:no-data-found-variable',
     defaultMessage: 'Engin {arg} skráð',
   },
   noDataFoundVariableMasculine: {
-    id: 'sp.health:no-data-found-masculine',
+    id: 'service.portal:no-data-found-variable-masculine',
     defaultMessage: 'Engir {arg} skráðir',
   },
   noDataFoundVariableFeminine: {
-    id: 'sp.health:no-data-found-feminine',
+    id: 'service.portal:no-data-found-variable-feminine',
     defaultMessage: 'Engar {arg} skráðar',
   },
   noDataFoundVariableDetail: {
-    id: 'sp.health:no-data-found-detail',
+    id: 'service.portal:no-data-found-variable-detail',
     defaultMessage:
       'Ef þú telur að þú eigir að vera með skráða {arg}, vinsamlegast hafðu samband við þjónustuaðila.',
   },
   noDataFoundVariableDetailVariation: {
-    id: 'sp.health:no-data-found-detail-variation',
+    id: 'service.portal:no-data-found-variable-detail-variation',
     defaultMessage:
       'Ef þú telur að þú eigir að vera með skráð {arg}, vinsamlegast hafðu samband við þjónustuaðila.',
   },
