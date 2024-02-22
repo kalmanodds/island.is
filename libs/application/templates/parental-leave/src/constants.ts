@@ -11,6 +11,7 @@ export const PARENTAL_GRANT_STUDENTS = 'parentalGrantStudents'
 export const PERMANENT_FOSTER_CARE = 'foster_care'
 export const ADOPTION = 'primary_adoption'
 export const OTHER_NO_CHILDREN_FOUND = 'other'
+export const VEIKMEÐG = 'VEIKMEÐG'
 
 export const FILE_SIZE_LIMIT = 2000000 // 2MB
 

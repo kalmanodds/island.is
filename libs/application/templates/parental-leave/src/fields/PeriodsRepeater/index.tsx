@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useCallback, useEffect } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 
 import { UPDATE_APPLICATION } from '@island.is/application/graphql'
@@ -27,10 +27,11 @@ import {
   synchronizeVMSTPeriods,
 } from '../../lib/parentalLeaveUtils'
 import { parentalLeaveFormMessages } from '../../lib/messages'
-import { States } from '../../constants'
+import { States, VEIKMEÐG } from '../../constants'
 import { useDaysAlreadyUsed } from '../../hooks/useDaysAlreadyUsed'
 import { useRemainingRights } from '../../hooks/useRemainingRights'
 import { GetApplicationInformation } from '../../graphql/queries'
+import { ApplicationRights } from '../../types/schema'
 
 type FieldProps = FieldBaseProps & {
   field?: {
@@ -55,6 +56,20 @@ const PeriodsRepeater: FC<React.PropsWithChildren<ScreenProps>> = ({
     application.state === States.DRAFT ||
     application.state === States.EDIT_OR_ADD_EMPLOYERS_AND_PERIODS
 
+  const updateApplicationRights = useCallback(async (res: number) => {
+    await updateApplication({
+      variables: {
+        input: {
+          id: application.id,
+          answers: {
+            additionalRights: res,
+          },
+        },
+        locale,
+      },
+    })
+  }, [])
+
   // Need to be consider again when applicant could change basic information
   const shouldCall =
     application.state === States.EDIT_OR_ADD_EMPLOYERS_AND_PERIODS
@@ -71,6 +86,17 @@ const PeriodsRepeater: FC<React.PropsWithChildren<ScreenProps>> = ({
       applicationId: application.id,
       nationalId: application.applicant,
       shouldNotCall: !shouldCall,
+    },
+    onCompleted: (result) => {
+      if (result?.getApplicationInformation?.applicationRights) {
+        const res: number = Number(
+          result.getApplicationInformation.applicationRights.find(
+            (item: ApplicationRights) => item.rightsUnit === VEIKMEÐG,
+          ).days,
+        )
+
+        res !== 0 && updateApplicationRights(res)
+      }
     },
   })
 

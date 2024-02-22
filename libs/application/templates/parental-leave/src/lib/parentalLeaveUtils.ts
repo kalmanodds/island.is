@@ -335,11 +335,15 @@ export const getAvailableRightsInDays = (application: Application) => {
   const additionalSingleParentDays =
     getAdditionalSingleParentRightsInDays(application)
 
+  // VEIKMEÐG
+  const { additionalRights } = getApplicationAnswers(application.answers)
+
   return (
     selectedChild.remainingDays +
     additionalSingleParentDays +
     transferredDays +
-    multipleBirthsRequestDays
+    multipleBirthsRequestDays +
+    additionalRights
   )
 }
 
@@ -980,6 +984,12 @@ export function getApplicationAnswers(answers: Application['answers']) {
 
   const language = getValueViaPath(answers, 'applicant.language') as string
 
+  const additionalRights = getValueViaPath(
+    answers,
+    'additionalRights',
+    0,
+  ) as number
+
   return {
     applicationType,
     noChildrenFoundTypeOfApplication,
@@ -1047,6 +1057,7 @@ export function getApplicationAnswers(answers: Application['answers']) {
     tempPeriods,
     tempEmployers,
     language,
+    additionalRights,
   }
 }
 

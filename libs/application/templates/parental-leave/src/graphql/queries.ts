@@ -46,6 +46,11 @@ export const GetApplicationInformation = gql`
         firstPeriodStart
         rightsCodePeriod
       }
+      applicationRights {
+        rightsUnit
+        days
+        daysLeft
+      }
     }
   }
 `
