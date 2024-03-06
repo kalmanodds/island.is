@@ -12,6 +12,8 @@ import { messages } from '../../lib/messages'
 import { useLocale } from '@island.is/localization'
 import { HealthPaths } from '../../lib/paths'
 import { Problem } from '@island.is/react-spa/shared'
+import { isDefined } from '@island.is/shared/utils'
+import { useMemo } from 'react'
 
 type UseParams = {
   type: string
@@ -35,6 +37,18 @@ export const MedicineCertificate = () => {
 
   const isLoading = loading && !error && !data
   const hasError = error && !loading && !data
+
+  const doctors = useMemo(() => {
+    let doctor = certificate?.doctor
+    if (certificate?.methylDoctors?.length) {
+      const doctorNames = certificate.methylDoctors
+        .map((c) => c.name)
+        .filter(isDefined)
+        .join(', ')
+      doctor += `, ${doctorNames}`
+    }
+    return doctor
+  }, [certificate?.doctor, certificate?.methylDoctors])
 
   return (
     <Box paddingTop={4}>
@@ -92,11 +106,11 @@ export const MedicineCertificate = () => {
                 valueColumnSpan={['6/12']}
               />
             )}
-            {certificate.doctor && (
+            {doctors && (
               <UserInfoLine
                 paddingY={3}
                 label={formatMessage(messages.medicineNameOfDoctor)}
-                content={certificate.doctor}
+                content={doctors}
                 labelColumnSpan={['6/12']}
                 valueColumnSpan={['6/12']}
               />
