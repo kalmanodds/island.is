@@ -9,14 +9,14 @@ export class InsuranceOverview {
   @Field({ nullable: true })
   explanation?: string
 
-  @Field(() => Date, { nullable: true })
-  from?: Date | null
+  @Field(() => Date)
+  from!: Date
 
   @Field(() => InsuranceStatus)
   status!: InsuranceStatus
 
-  @Field(() => Int, { nullable: true })
-  maximumPayment?: number | null
+  @Field(() => Int)
+  maximumPayment!: number
 
   @Field(() => Date, { nullable: true })
   ehicCardExpiryDate?: Date

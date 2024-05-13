@@ -7,9 +7,9 @@ registerEnumType(InsuranceStatusType, {
 
 @ObjectType('RightsPortalInsuranceStatus')
 export class InsuranceStatus {
-  @Field(() => String, { nullable: true })
-  display?: string | null
+  @Field()
+  display!: string
 
-  @Field(() => InsuranceStatusType, { nullable: true })
-  code?: string | null
+  @Field(() => InsuranceStatusType)
+  code!: InsuranceStatusType
 }

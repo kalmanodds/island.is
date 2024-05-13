@@ -14,7 +14,6 @@ import { Inject, Injectable } from '@nestjs/common'
 import { mapToStudent, mapToStudentTrackModel } from './mapper'
 import { StudentTrack } from './models/studentTrack.model'
 import { StudentTrackHistory } from './models/studentTrackHistory.model'
-import { StudentTrackTranscript } from './models/studentTrackTranscript.model'
 import { StudentTrackTranscriptError } from './models/studentTrackTranscriptError.model'
 import { StudentTrackTranscriptResult } from './models/studentTrackTranscriptResult.model'
 import { UniversityContentfulReferenceIds } from './universityCareers.types'
@@ -56,31 +55,13 @@ export class UniversityCareersService {
   ): Promise<StudentTrackHistory | null> {
     let normalizedResults: Array<typeof StudentTrackTranscriptResult> = []
 
-    const organizations = await this.getContentfulOrganizations(locale)
     //parallel execution
     await Promise.all(
       Object.values(UniversityId).map(async (uni) => {
-        const org = organizations.items.find(
-          (o) =>
-            o.referenceIdentifier === UniversityContentfulReferenceIds[uni],
-        )
-        if (!org) {
-          this.logger.warning('Invalid institution for student track history', {
-            university: uni,
-          })
-          normalizedResults.push({
-            university: uni,
-            error: JSON.stringify(new Error('Invalid institution')),
-          })
-          return
-        }
-
         const data = await this.getStudentTrackHistoryByUniversity(
           user,
           uni,
           locale,
-          org.title,
-          org.logo?.url,
         )
 
         if (!data) {
@@ -105,12 +86,7 @@ export class UniversityCareersService {
     user: User,
     university: UniversityId,
     locale: Locale,
-    institutionTitle?: string,
-    institutionLogoUrl?: string,
-  ): Promise<
-    Array<StudentTrackTranscript> | StudentTrackTranscriptError | null
-  > {
-    // TODO: REMOVE FEATURE FLAG LOGIC WHEN FULLY TESTED
+  ): Promise<Array<StudentTrackDto> | StudentTrackTranscriptError | null> {
     if (university !== 'hi') {
       const isUniversityAllowed = await this.featureFlagService.getValue(
         FEATURE_FLAGS[university],
@@ -129,16 +105,7 @@ export class UniversityCareersService {
         })
 
     if (Array.isArray(data)) {
-      return data
-        .map((d) =>
-          mapToStudent(d, {
-            id: university,
-            shortId: UniversityIdMap[university],
-            displayName: institutionTitle ?? '',
-            logoUrl: institutionLogoUrl,
-          }),
-        )
-        .filter(isDefined)
+      return data.map((d) => mapToStudent(d)).filter(isDefined)
     }
 
     return data
@@ -164,18 +131,10 @@ export class UniversityCareersService {
       })
       return null
     }
-
-    const organization =
-      await this.cmsContentfulService.getOrganizationByReferenceId(
-        UniversityContentfulReferenceIds[university],
-        locale,
-      )
     return (
       mapToStudentTrackModel(data, {
         id: university,
         shortId: UniversityIdMap[university],
-        displayName: organization.title,
-        logoUrl: organization.logo?.url,
       }) ?? null
     )
   }

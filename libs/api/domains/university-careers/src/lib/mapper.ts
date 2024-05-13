@@ -5,12 +5,9 @@ import {
 import { isDefined } from '@island.is/shared/utils'
 import { StudentTrack } from './models/studentTrack.model'
 import { StudentTrackTranscript } from './models/studentTrackTranscript.model'
-import { Institution } from './models/institution.model'
-import { InstitutionProps } from './universityCareers.types'
 
 export const mapToStudent = (
   data: StudentTrackDto,
-  institution: InstitutionProps,
 ): StudentTrackTranscript | null => {
   if (
     !data ||
@@ -25,37 +22,29 @@ export const mapToStudent = (
     return null
   }
 
-  let institutionMapped: Institution | undefined
-
-  if (data.institution?.id) {
-    institutionMapped = {
-      id: data.institution.id,
-      shortId: data.institution.idShort,
-      displayName: institution.displayName,
-      logoUrl: institution.logoUrl,
-    }
-  } else {
-    institutionMapped = institution
-  }
-
   return {
     name: data.name,
     trackNumber: data.trackNumber,
-    institution: institutionMapped,
     school: data.school,
     faculty: data.faculty,
     studyProgram: data.studyProgram,
     degree: data.degree,
     graduationDate: data.graduationDate.toISOString(),
+    institution: data?.institution?.id
+      ? {
+          id: data?.institution?.id,
+          shortId: data.institution?.idShort,
+          displayName: data.institution?.displayName,
+        }
+      : undefined,
   }
 }
 
 export const mapToStudentTrackModel = (
   data: StudentTrackOverviewDto,
-  institution: InstitutionProps,
-): StudentTrack | null => {
+): Omit<StudentTrack, 'organizationReferenceId'> | null => {
   if (
-    !data.transcript ||
+    !data?.transcript ||
     !data?.body?.description ||
     !data?.body?.footer ||
     !data?.body?.unconfirmedData
@@ -63,7 +52,7 @@ export const mapToStudentTrackModel = (
     return null
   }
 
-  const transcript = mapToStudent(data.transcript, institution)
+  const transcript = mapToStudent(data.transcript)
 
   if (!transcript) {
     return null

@@ -1,4 +1,4 @@
-import { Args, Query, Resolver } from '@nestjs/graphql'
+import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
 import { Inject, UseGuards } from '@nestjs/common'
 import { Audit } from '@island.is/nest/audit'
 import {
@@ -18,6 +18,15 @@ import { LOGGER_PROVIDER, type Logger } from '@island.is/logging'
 import { StudentInfoInput } from './dto/studentInfo.input'
 import { UniversityCareersService } from './universityCareers.service'
 import { StudentTrackHistory } from './models/studentTrackHistory.model'
+import {
+  OrganizationLinkByReferenceIdDataLoader,
+  OrganizationLogoLoader,
+  OrganizationTitleByReferenceIdDataLoader,
+  OrganizationTitleByReferenceIdLoader,
+  OrganizationTitleEnByReferenceIdDataLoader,
+  OrganizationTitleEnByReferenceIdLoader,
+} from '@island.is/cms'
+import { Loader } from '@island.is/nest/dataloader'
 
 @UseGuards(IdsUserGuard, ScopesGuard)
 @Scopes(ApiScope.internal)
@@ -74,5 +83,32 @@ export class UniversityCareersResolver {
       ...student,
       downloadServiceURL: `${this.downloadServiceConfig.baseUrl}/download/v1/education/graduation/`,
     }
+  }
+
+  @ResolveField('institutionTitle', () => String, { nullable: true })
+  async resolveInstitutionTitle(
+    @Loader(OrganizationTitleByReferenceIdLoader)
+    organizationTitleLoader: OrganizationTitleByReferenceIdDataLoader,
+    @Parent() studentTrack: StudentTrack,
+  ): Promise<string | null> {
+    return organizationTitleLoader.load(studentTrack.organizationReferenceId)
+  }
+
+  @ResolveField('institutionTitleEn', () => String, { nullable: true })
+  async resolveInstitutionTitleEn(
+    @Loader(OrganizationTitleEnByReferenceIdLoader)
+    organizationTitleEnLoader: OrganizationTitleEnByReferenceIdDataLoader,
+    @Parent() studentTrack: StudentTrack,
+  ): Promise<string | null> {
+    return organizationTitleEnLoader.load(studentTrack.organizationReferenceId)
+  }
+
+  @ResolveField('institutionLogoUrl', () => String, { nullable: true })
+  async resolveInstitutionLogo(
+    @Loader(OrganizationLogoLoader)
+    organizationLogoLoader: OrganizationLinkByReferenceIdDataLoader,
+    @Parent() studentTrack: StudentTrack,
+  ): Promise<string | null> {
+    return organizationLogoLoader.load(studentTrack.organizationReferenceId)
   }
 }

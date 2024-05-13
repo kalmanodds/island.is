@@ -7,7 +7,6 @@ export interface InstitutionProps {
   id: UniversityId
   shortId: UniversityIdShort
   displayName: string
-  logoUrl?: string
 }
 
 export const UniversityContentfulReferenceIds: Record<UniversityId, string> = {

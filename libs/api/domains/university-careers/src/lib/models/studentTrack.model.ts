@@ -16,6 +16,18 @@ export class StudentTrack {
   @Field(() => StudentTrackMetadata)
   metadata!: StudentTrackMetadata
 
-  @Field(() => String, { nullable: true })
+  @Field({ nullable: true })
   downloadServiceURL?: string
+
+  @Field()
+  organizationReferenceId!: string
+
+  @Field({ nullable: true })
+  institutionTitle?: string
+
+  @Field({ nullable: true })
+  institutionTitleEn?: string
+
+  @Field({ nullable: true })
+  institutionLogoUrl?: string
 }
