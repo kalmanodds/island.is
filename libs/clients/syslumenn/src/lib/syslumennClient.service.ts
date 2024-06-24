@@ -478,7 +478,11 @@ export class SyslumennService {
         }
       }) ?? []
 
+<<<<<<< HEAD
     // console.log('CERTIFICATES: ', certificates)
+=======
+    console.log('CERTIFICATES: ', certificates)
+>>>>>>> 4470dffa72 (trying to rebase and mergeing)
 
     return certificates
   }
