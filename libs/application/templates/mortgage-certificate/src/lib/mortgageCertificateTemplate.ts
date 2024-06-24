@@ -122,15 +122,6 @@ const template: ApplicationTemplate<
                 },
               ],
               write: 'all',
-<<<<<<< HEAD
-=======
-              api: [
-                IdentityApi,
-                // NationalRegistryRealEstateApi,
-                UserProfileApi,
-                SyslumadurPaymentCatalogApi,
-              ],
->>>>>>> bf29f5441f (starting update)
               delete: true,
             },
           ],
