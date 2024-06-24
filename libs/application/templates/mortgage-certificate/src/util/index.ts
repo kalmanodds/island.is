@@ -47,5 +47,7 @@ export const getChargeItemCodesAndExtraLabel = (
 
   console.log(result)
 
+  console.log(result)
+
   return result
 }
