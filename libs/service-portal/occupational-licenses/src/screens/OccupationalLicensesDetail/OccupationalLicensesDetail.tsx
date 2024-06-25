@@ -96,9 +96,9 @@ const OccupationalLicenseDetail = () => {
                       to={
                         a.type === OccupationalLicensesV2LinkType.DOCUMENT
                           ? DocumentsPaths.ElectronicDocumentSingle.replace(
-                            ':id',
-                            a.url,
-                          )
+                              ':id',
+                              a.url,
+                            )
                           : a.url
                       }
                       text={a.text}
@@ -191,8 +191,8 @@ const OccupationalLicenseDetail = () => {
                       license?.status === 'VALID'
                         ? om.validLicense
                         : license?.status === 'LIMITED'
-                          ? om.validWithLimitationsLicense
-                          : om.invalidLicense,
+                        ? om.validWithLimitationsLicense
+                        : om.invalidLicense,
                     )}
                   </Text>
                   <Icon
@@ -200,15 +200,15 @@ const OccupationalLicenseDetail = () => {
                       license?.status === 'VALID'
                         ? 'checkmarkCircle'
                         : license?.status === 'LIMITED'
-                          ? 'warning'
-                          : 'closeCircle'
+                        ? 'warning'
+                        : 'closeCircle'
                     }
                     color={
                       license?.status === 'VALID'
                         ? 'mint600'
                         : license?.status === 'LIMITED'
-                          ? 'yellow600'
-                          : 'red600'
+                        ? 'yellow600'
+                        : 'red600'
                     }
                     type="filled"
                   />
