@@ -32,6 +32,7 @@ const CareerCards = () => {
 
   const educationExamFamilyOverviews = data?.educationExamFamilyOverviews || []
 
+  console.log(data)
   if (error && !loading) {
     return <Problem error={error} noBorder={false} />
   }

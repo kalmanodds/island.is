@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 
 import { handle204 } from '@island.is/clients/middlewares'
 import { isDefined } from '@island.is/shared/utils'
@@ -18,12 +18,14 @@ import {
   EinstaklingurDTOTru,
   GerviEinstaklingarApi,
 } from '../../gen/fetch'
+import { type Logger, LOGGER_PROVIDER } from '@island.is/logging'
 
 @Injectable()
 export class NationalRegistryV3ClientService {
   constructor(
     private individualApi: EinstaklingarApi,
     private fakeApi: GerviEinstaklingarApi,
+    @Inject(LOGGER_PROVIDER) private readonly logger: Logger,
   ) {}
 
   getAddress(nationalId: string): Promise<EinstaklingurDTOHeimili | null> {

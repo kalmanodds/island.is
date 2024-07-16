@@ -21,6 +21,7 @@ import { S3Service } from './s3.service'
 import { getYearInterval } from './education.utils'
 import { NationalRegistryV3ClientService } from '@island.is/clients/national-registry-v3'
 import { isDefined } from '@island.is/shared/utils'
+import { type Logger, LOGGER_PROVIDER } from '@island.is/logging'
 
 @Injectable()
 export class EducationService {
@@ -29,6 +30,7 @@ export class EducationService {
     private readonly s3Service: S3Service,
     @Inject('CONFIG')
     private readonly config: Config,
+    @Inject(LOGGER_PROVIDER) private readonly logger: Logger,
     private readonly nationalRegistryApi: NationalRegistryV3ClientService,
   ) {}
 
@@ -70,7 +72,7 @@ export class EducationService {
     // family memember, so that indexes are consistant no matter how they
     // are displayed or fetched.
     // They also don't need to be absolute indexes, only indexes that are
-    // unique from the point of view of each viewer.
+    // unique from the point of view of each viewer
 
     if (!userData?.nafn || !userData?.kennitala) {
       return []
@@ -105,12 +107,17 @@ export class EducationService {
   ): Promise<ExamFamilyOverview[]> {
     const family = (await this.getFamily(nationalId)) ?? []
 
+    this.logger.debug('familia', family)
+
     const examFamilyOverviews = await Promise.all(
       family
         .map(async (familyMember, index) => {
+          this.logger.debug('familyMebmer', familyMember)
           const studentAssessment = await this.mmsApi.getStudentAssessment(
             familyMember.nationalId,
           )
+          this.logger.debug('studentAssessment', studentAssessment)
+
           if (
             studentAssessment.einkunnir &&
             studentAssessment.einkunnir.length <= 0
