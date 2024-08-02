@@ -151,7 +151,7 @@
     "class-transformer": "0.5.1",
     "class-validator": "0.14.0",
     "classnames": "2.2.6",
-    "configcat-js": "7.0.1",
+    "configcat-js": "9.5.0",
     "configcat-node": "9.1.1",
     "contentful": "8.2.0",
     "contentful-management": "10.12.0",
