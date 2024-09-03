@@ -1,5 +1,13 @@
 import { defineMessages } from 'react-intl'
 
+export const compulsoryMessages = defineMessages({
+  compulsorySchoolIntro: {
+    id: 'sp.education-compulsory-school-career:career-intro',
+    defaultMessage:
+      'Hér birtast einkunnir þínar og barna þinna úr samræmdum prófum frá árinu 2020 sem sóttar eru til Menntamálastofnunar. Unnið er að því að því að koma öllum einkunnum úr menntakerfi Íslands á einn stað.',
+  },
+})
+
 export const edMessage = defineMessages({
   courseName: {
     id: 'sp.education-secondary-school:course-name',

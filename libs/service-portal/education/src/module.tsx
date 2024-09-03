@@ -4,42 +4,55 @@ import { PortalModule } from '@island.is/portals/core'
 import { EducationPaths } from './lib/paths'
 import { Navigate } from 'react-router-dom'
 
-const EducationCareer = lazy(() =>
-  import('../../education-career/src/screens/EducationCareer/EducationCareer'),
+const EducationCareer = lazy(
+  () =>
+    import(
+      '../../education-career/src/screens/EducationCareer/EducationCareer'
+    ),
 )
 
-const EducationGraduation = lazy(() =>
-  import('./screens/EducationGraduation/EducationGraduation'),
+const CompulsoryCareer = lazy(
+  () =>
+    import(
+      './screens/CompulsorySchoolFamilyExamOverview/CompulsorySchoolFamilyExamOverview'
+    ),
 )
 
-const EducationGraduationDetail = lazy(() =>
-  import('./screens/EducationGraduationDetail/EducationGraduationDetail'),
+const EducationGraduation = lazy(
+  () => import('./screens/EducationGraduation/EducationGraduation'),
 )
 
-const SecondarySchoolCareer = lazy(() =>
-  import('./screens/SecondarySchoolCareer/SecondarySchoolCareer'),
+const EducationGraduationDetail = lazy(
+  () => import('./screens/EducationGraduationDetail/EducationGraduationDetail'),
 )
 
-const SecondarySchoolGraduationOverview = lazy(() =>
-  import(
-    './screens/SecondarySchoolGraduationOverview/SecondarySchoolGraduationOverview'
-  ),
+const SecondarySchoolCareer = lazy(
+  () => import('./screens/SecondarySchoolCareer/SecondarySchoolCareer'),
 )
 
-const SecondarySchoolGraduationSingle = lazy(() =>
-  import(
-    './screens/SecondarySchoolGraduationSingle/SecondarySchoolGraduationSingle'
-  ),
+const SecondarySchoolGraduationOverview = lazy(
+  () =>
+    import(
+      './screens/SecondarySchoolGraduationOverview/SecondarySchoolGraduationOverview'
+    ),
 )
 
-const SecondarySchoolGraduationDetail = lazy(() =>
-  import(
-    './screens/SecondarySchoolGraduationDetail/SecondarySchoolGraduationDetail'
-  ),
+const SecondarySchoolGraduationSingle = lazy(
+  () =>
+    import(
+      './screens/SecondarySchoolGraduationSingle/SecondarySchoolGraduationSingle'
+    ),
 )
 
-const DrivingLessonsBook = lazy(() =>
-  import('./screens/DrivingLessonsBook/DrivingLessonsBook'),
+const SecondarySchoolGraduationDetail = lazy(
+  () =>
+    import(
+      './screens/SecondarySchoolGraduationDetail/SecondarySchoolGraduationDetail'
+    ),
+)
+
+const DrivingLessonsBook = lazy(
+  () => import('./screens/DrivingLessonsBook/DrivingLessonsBook'),
 )
 
 export const educationModule: PortalModule = {
@@ -64,7 +77,7 @@ export const educationModule: PortalModule = {
       name: 'Námsmat',
       path: EducationPaths.EducationAssessment,
       enabled: userInfo.scopes.includes(ApiScope.education),
-      element: <EducationCareer />,
+      element: <CompulsoryCareer />,
     },
 
     // Framhaldsskóli - Secondary education

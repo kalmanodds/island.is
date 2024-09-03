@@ -19,7 +19,9 @@ import { FamilyCompulsorySchoolCareer } from '../models/familyCareer.model'
 export class GradesResolver {
   constructor(private readonly educationService: EducationServiceV2) {}
 
-  @Query(() => FamilyCompulsorySchoolCareer)
+  @Query(() => FamilyCompulsorySchoolCareer, {
+    name: 'educationUserFamilyCompulsorySchoolCareer',
+  })
   @Scopes(ApiScope.education)
   @Audit()
   userFamilyExamResults(
