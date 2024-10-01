@@ -3,6 +3,11 @@ import {
   LicenseType,
   LicenseUpdateClientService,
 } from '@island.is/clients/license-client'
+import {
+  BaseLicenseUpdateClient as BaseLicenseUpdateClientV2,
+  LicenseType as LicenseTypeV2,
+  LicenseUpdateClientService as LicenseUpdateClientServiceV2,
+} from '@island.is/clients/license-client-v2'
 import type { Logger } from '@island.is/logging'
 import { LOGGER_PROVIDER } from '@island.is/logging'
 import {
@@ -40,6 +45,7 @@ export class LicenseService {
   constructor(
     @Inject(LOGGER_PROVIDER) private logger: Logger,
     private readonly clientService: LicenseUpdateClientService,
+    private readonly clientServiceV2: LicenseUpdateClientServiceV2,
     private readonly barcodeService: BarcodeService,
   ) {}
 

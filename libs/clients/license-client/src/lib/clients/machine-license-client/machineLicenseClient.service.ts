@@ -14,8 +14,8 @@ import { FetchError } from '@island.is/clients/middlewares'
 import {
   Pass,
   PassDataInput,
-  SmartSolutionsService,
-} from '@island.is/clients/smart-solutions-v2'
+  SmartSolutionsApi,
+} from '@island.is/clients/smartsolutions'
 import { Locale } from '@island.is/shared/types'
 import {
   LicenseClient,
@@ -36,7 +36,7 @@ export class MachineLicenseClient
   constructor(
     @Inject(LOGGER_PROVIDER) private logger: Logger,
     private machineApi: VinnuvelaApi,
-    private smartApi: SmartSolutionsService,
+    private smartApi: SmartSolutionsApi,
   ) {}
 
   clientSupportsPkPass = true
@@ -154,10 +154,7 @@ export class MachineLicenseClient
     }
   }
 
-  async getPkPass(
-    user: User,
-    locale: Locale = 'is',
-  ): Promise<Result<Partial<Pass>>> {
+  async getPkPass(user: User, locale: Locale = 'is'): Promise<Result<Pass>> {
     const license = await this.fetchLicense(user)
     if (!license.ok || !license.data) {
       this.logger.info(

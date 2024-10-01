@@ -2,6 +2,11 @@ import { Locale } from '@island.is/shared/types'
 import { GenericLicenseError } from './dto/GenericLicenseError.dto'
 import { Payload } from './dto/Payload.dto'
 import { GenericUserLicense as GenericUserLicenseModel } from './dto/GenericUserLicense.dto'
+import { ApiVersion } from './dto/GetGenericLicense.input'
+
+export interface UserLicenseResponse extends GenericUserLicenseModel {
+  apiVersion?: ApiVersion
+}
 
 export interface GenericLicenseMappedPayloadResponse {
   licenseName: string

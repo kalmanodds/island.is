@@ -1,4 +1,5 @@
 import { AdrDto } from '@island.is/clients/adr-and-machine-license'
+
 import format from 'date-fns/format'
 import { FlattenedAdrDto, FlattenedAdrRightsDto } from './adrLicenseClient.type'
 

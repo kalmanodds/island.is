@@ -1,30 +1,30 @@
 import type { Logger } from '@island.is/logging'
 import { Injectable } from '@nestjs/common'
-import { PassVerificationData, Result } from '../licenseClient.type'
 import {
   Pass,
   PassDataInput,
   RevokePassData,
-  SmartSolutionsService,
-} from '@island.is/clients/smart-solutions-v2'
+  SmartSolutionsApi,
+} from '@island.is/clients/smartsolutions'
+import { PassVerificationData, Result } from '../licenseClient.type'
 
 @Injectable()
 export abstract class BaseLicenseUpdateClient {
   constructor(
     protected logger: Logger,
-    protected smartApi: SmartSolutionsService,
+    protected smartApi: SmartSolutionsApi,
   ) {}
 
   abstract pushUpdate(
     inputData: PassDataInput,
     nationalId: string,
     requestId?: string,
-  ): Promise<Result<Partial<Pass> | undefined>>
+  ): Promise<Result<Pass | undefined>>
 
   abstract pullUpdate(
     nationalId: string,
     requestId?: string,
-  ): Promise<Result<Partial<Pass> | undefined>>
+  ): Promise<Result<Pass | undefined>>
 
   abstract revoke(
     nationalId: string,

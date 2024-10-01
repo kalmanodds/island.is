@@ -6,8 +6,8 @@ import {
   Pass,
   PassDataInput,
   RevokePassData,
-  SmartSolutionsService,
-} from '@island.is/clients/smart-solutions-v2'
+  SmartSolutionsApi,
+} from '@island.is/clients/smartsolutions'
 import {
   PassVerificationData,
   Result,
@@ -32,7 +32,7 @@ export class DrivingLicenseUpdateClient extends BaseLicenseUpdateClient {
     @Inject(DrivingDigitalLicenseClientConfig.KEY)
     private config: ConfigType<typeof DrivingDigitalLicenseClientConfig>,
     private drivingLicenseApi: DrivingLicenseApi,
-    protected smartApi: SmartSolutionsService,
+    protected smartApi: SmartSolutionsApi,
   ) {
     super(logger, smartApi)
   }
@@ -41,7 +41,7 @@ export class DrivingLicenseUpdateClient extends BaseLicenseUpdateClient {
     inputData: PassDataInput,
     nationalId: string,
     requestId?: string,
-  ): Promise<Result<Partial<Pass> | undefined>> {
+  ): Promise<Result<Pass | undefined>> {
     const inputFieldValues = inputData.inputFieldValues ?? []
     //small check that nationalId doesnt' already exist
     if (
@@ -63,7 +63,7 @@ export class DrivingLicenseUpdateClient extends BaseLicenseUpdateClient {
   async pullUpdate(
     nationalId: string,
     requestId?: string,
-  ): Promise<Result<Partial<Pass> | undefined>> {
+  ): Promise<Result<Pass | undefined>> {
     let data
     try {
       data = await Promise.all([
@@ -221,7 +221,7 @@ export class DrivingLicenseUpdateClient extends BaseLicenseUpdateClient {
       }
     }
 
-    const passNationalId = verifyRes.data.pass?.inputFieldValues?.find(
+    const passNationalId = verifyRes.data.pass?.inputFieldValues.find(
       (i) => i.passInputField.identifier === 'kennitala',
     )?.value
 

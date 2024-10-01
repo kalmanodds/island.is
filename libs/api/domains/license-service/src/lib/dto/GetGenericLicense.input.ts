@@ -1,5 +1,12 @@
-import { Field, InputType } from '@nestjs/graphql'
+import { Field, InputType, registerEnumType } from '@nestjs/graphql'
 import { GenericLicenseType } from '../licenceService.type'
+
+export enum ApiVersion {
+  First,
+  Second,
+}
+
+registerEnumType(ApiVersion, { name: 'LicenseServiceApiVersion' })
 
 @InputType()
 export class GetGenericLicenseInput {
@@ -8,4 +15,7 @@ export class GetGenericLicenseInput {
 
   @Field({ nullable: true })
   licenseId?: string
+
+  @Field(() => ApiVersion, { nullable: true })
+  apiVersion?: ApiVersion
 }

@@ -1,3 +1,5 @@
+TO BE DEPRECATED
+
 # License Client
 
 This library was generated with [Nx](https://nx.dev).

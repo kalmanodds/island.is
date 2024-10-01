@@ -2,6 +2,7 @@ import {
   GenericLicenseType,
   GenericUserLicenseMetaLinksType,
   GenericUserLicensePkPassStatus,
+  LicenseServiceApiVersion,
 } from '@island.is/api/schema'
 import { AlertMessage, Box, Inline, Text } from '@island.is/island-ui/core'
 import { useLocale, useNamespaces } from '@island.is/localization'
@@ -52,6 +53,7 @@ const LicenseDetail = () => {
           input: {
             licenseId: id,
             licenseType,
+            apiVersion: LicenseServiceApiVersion.Second,
           },
         },
       })

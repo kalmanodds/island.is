@@ -4,6 +4,11 @@ import { Inject, Injectable } from '@nestjs/common'
 import { Auth, AuthMiddleware, User } from '@island.is/auth-nest-tools'
 import { createPkPassDataInput } from './adrLicenseClientMapper'
 import { AdrApi, AdrDto } from '@island.is/clients/adr-and-machine-license'
+import {
+  Pass,
+  PassDataInput,
+  SmartSolutionsApi,
+} from '@island.is/clients/smartsolutions'
 import { format } from 'kennitala'
 import { FetchError } from '@island.is/clients/middlewares'
 import compareAsc from 'date-fns/compareAsc'
@@ -17,11 +22,6 @@ import {
   VerifyPkPassResult,
 } from '../../licenseClient.type'
 import { FlattenedAdrDto } from './adrLicenseClient.type'
-import {
-  Pass,
-  PassDataInput,
-  SmartSolutionsService,
-} from '@island.is/clients/smart-solutions-v2'
 
 /** Category to attach each log message to */
 const LOG_CATEGORY = 'adrlicense-service'
@@ -31,7 +31,7 @@ export class AdrLicenseClient implements LicenseClient<LicenseType.AdrLicense> {
   constructor(
     @Inject(LOGGER_PROVIDER) private logger: Logger,
     private adrApi: AdrApi,
-    private smartApi: SmartSolutionsService,
+    private smartApi: SmartSolutionsApi,
   ) {}
 
   clientSupportsPkPass = true
@@ -155,7 +155,7 @@ export class AdrLicenseClient implements LicenseClient<LicenseType.AdrLicense> {
     }
   }
 
-  private async getPkPass(user: User): Promise<Result<Partial<Pass>>> {
+  private async getPkPass(user: User): Promise<Result<Pass>> {
     const license = await this.fetchLicense(user)
 
     if (!license.ok || !license.data) {

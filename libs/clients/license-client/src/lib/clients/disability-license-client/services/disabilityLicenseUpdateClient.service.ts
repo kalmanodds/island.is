@@ -2,23 +2,23 @@ import type { Logger } from '@island.is/logging'
 import { LOGGER_PROVIDER } from '@island.is/logging'
 import { Inject, Injectable } from '@nestjs/common'
 import {
+  Pass,
+  PassDataInput,
+  RevokePassData,
+  SmartSolutionsApi,
+} from '@island.is/clients/smartsolutions'
+import {
   PassVerificationData,
   Result,
   VerifyInputData,
 } from '../../../licenseClient.type'
 import { BaseLicenseUpdateClient } from '../../baseLicenseUpdateClient'
-import {
-  Pass,
-  PassDataInput,
-  RevokePassData,
-  SmartSolutionsService,
-} from '@island.is/clients/smart-solutions-v2'
 
 @Injectable()
 export class DisabilityLicenseUpdateClient extends BaseLicenseUpdateClient {
   constructor(
     @Inject(LOGGER_PROVIDER) protected logger: Logger,
-    protected smartApi: SmartSolutionsService,
+    protected smartApi: SmartSolutionsApi,
   ) {
     super(logger, smartApi)
   }
@@ -26,11 +26,11 @@ export class DisabilityLicenseUpdateClient extends BaseLicenseUpdateClient {
   pushUpdate(
     inputData: PassDataInput,
     nationalId: string,
-  ): Promise<Result<Partial<Pass> | undefined>> {
+  ): Promise<Result<Pass | undefined>> {
     return this.smartApi.updatePkPass(inputData, nationalId)
   }
 
-  async pullUpdate(): Promise<Result<Partial<Pass>>> {
+  async pullUpdate(): Promise<Result<Pass>> {
     return {
       ok: false,
       error: {

@@ -22,7 +22,7 @@ const Overview = () => {
       if (ffEnabled) {
         setVersion('v2')
       } else {
-        setVersion('v1')
+        setVersion('v2')
       }
     }
     isFlagEnabled()
