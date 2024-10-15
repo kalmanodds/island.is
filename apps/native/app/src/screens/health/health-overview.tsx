@@ -24,6 +24,7 @@ import externalLinkIcon from '../../assets/icons/external-link.png'
 import { getConfig } from '../../config'
 import { useBrowser } from '../../lib/use-browser'
 import { useConnectivityIndicator } from '../../hooks/use-connectivity-indicator'
+import { useLocale } from '../../hooks/use-locale'
 import { useFeatureFlag } from '../../contexts/feature-flag-provider'
 
 const Host = styled(SafeAreaView)`
@@ -102,6 +103,9 @@ export const HealthOverviewScreen: NavigationFunctionComponent = ({
   const now = useMemo(() => new Date().toISOString(), [])
 
   const organDonationRes = useGetOrganDonorStatusQuery({
+    variables: {
+      locale: useLocale(),
+    },
     skip: !isOrganDonationEnabled,
   })
   const healthInsuranceRes = useGetHealthInsuranceOverviewQuery()
