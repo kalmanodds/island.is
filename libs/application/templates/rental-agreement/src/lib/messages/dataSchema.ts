@@ -11,4 +11,15 @@ export const dataSchema = defineMessages({
     defaultMessage: 'Símanúmerið þarf að vera gilt.',
     description: 'Error message when phone number is invalid.',
   },
+
+  errorNoValue: {
+    id: 'ra.application:dataSchema.errorNoValue',
+    defaultMessage: 'Þessi reitur þarf að vera útfylltur.',
+    description: 'Error message when a required field has not been filled out',
+  },
+  errorValidateMeterStatus: {
+    id: 'ra.application:dataSchema.errorValidateMeterStatus',
+    defaultMessage: 'Sláðu inn stöðu í tölustöfum',
+    description: 'Error message when electricity meter status is invalid.',
+  },
 })

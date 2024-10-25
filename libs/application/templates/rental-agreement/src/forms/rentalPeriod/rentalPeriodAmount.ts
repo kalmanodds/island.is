@@ -20,10 +20,15 @@ import {
   getRentalAmountPaymentDateOptions,
 } from '../../lib/utils'
 import * as m from '../../lib/messages'
+import is from 'libs/island-ui/core/src/lib/Hyphen/patterns/is'
 
 function rentalAmountIndexIsConnected(answers: FormValue) {
-  const { isRentalAmountIndexConnected } = getApplicationAnswers(answers)
-  return isRentalAmountIndexConnected !== undefined
+  const isRentalAmountIndexConnected: string[] =
+    answers.isRentalAmountIndexConnected as string[]
+  return (
+    isRentalAmountIndexConnected &&
+    isRentalAmountIndexConnected.includes('true')
+  )
 }
 
 export const RentalPeriodAmount = buildSubSection({
@@ -53,11 +58,10 @@ export const RentalPeriodAmount = buildSubSection({
           title: '',
           options: [
             {
-              value: AnswerOptions.YES,
+              value: 'true',
               label: m.rentalAmount.priceIndexLabel,
             },
           ],
-          width: 'half',
           spacing: 0,
         }),
         buildSelectField({
@@ -68,14 +72,15 @@ export const RentalPeriodAmount = buildSubSection({
           condition: rentalAmountIndexIsConnected,
           width: 'half',
         }),
-        buildDateField({
-          id: 'rentalAmountIndexDate',
-          title: m.rentalAmount.indexDateLabel,
-          maxDate: new Date(),
-          defaultValue: new Date().toISOString().substring(0, 10),
-          width: 'half',
-          condition: rentalAmountIndexIsConnected,
-        }),
+        // TODO: Implement this field later when we are ready to connect to Hagstofa API
+        // buildDateField({
+        //   id: 'rentalAmountIndexDate',
+        //   title: m.rentalAmount.indexDateLabel,
+        //   maxDate: new Date(),
+        //   defaultValue: new Date().toISOString().substring(0, 10),
+        //   width: 'half',
+        //   condition: rentalAmountIndexIsConnected,
+        // }),
         buildTextField({
           id: 'rentalAmountIndexValue',
           title: m.rentalAmount.indexValueLabel,
@@ -116,7 +121,7 @@ export const RentalPeriodAmount = buildSubSection({
           title: '',
           options: [
             {
-              value: AnswerOptions.YES,
+              value: 'true',
               label: m.rentalAmount.paymentInsuranceRequiredLabel,
             },
           ],
