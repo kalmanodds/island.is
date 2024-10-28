@@ -629,4 +629,16 @@ export const en: TranslatedMessages = {
   'health.overview.paymentDebt': 'Debt',
   'health.overview.therapy': 'Therapy',
   'health.overview.aidsAndNutrition': 'Aids and nutrition',
+
+  // health - vaccinations
+  'health.vaccinations.screenTitle': 'Bólusetningar',
+  'health.vaccinations.title': 'Bólusetningar',
+  'health.vaccinations.description':
+    'Hér getur þú séð lista yfir bóluefni sem þú hefur fengið, stöðu bólusetningar og aðrar upplýsingar.',
+  'health.vaccinations.generalVaccinations': 'Almennar bólusetningar',
+  'health.vaccinations.otherVaccinations': 'Aðrar bólusetningar',
+  'health.vaccinations.number': 'Nr.',
+  'health.vaccinations.date': 'Dags.',
+  'health.vaccinations.age': 'Aldur',
+  'health.vaccinations.vaccine': 'Bóluefni',
 }
