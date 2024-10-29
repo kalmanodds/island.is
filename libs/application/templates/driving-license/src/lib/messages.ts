@@ -888,6 +888,11 @@ export const m = defineMessages({
     defaultMessage: 'Umsókn um aukin ökuréttindi.',
     description: 'Option description for selecting advanced driving license',
   },
+  applicationForAdvancedAgeRequired: {
+    id: 'dl.application:applicationForAdvancedAgeFor',
+    defaultMessage: 'Réttindaaldur fyrir %1 er %2 ára',
+    description: 'Required age for %1 is %2 years',
+  },
   applicationForAdvancedLicenseTitleC1: {
     id: 'dl.application:applicationForAdvancedLicenseTitleC1',
     defaultMessage: 'C1 titill',

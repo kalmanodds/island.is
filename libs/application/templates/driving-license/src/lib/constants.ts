@@ -50,6 +50,7 @@ export const AdvancedLicense = {
 
 type AdvancedLicenseMapItem = {
   minAge: number
+  group: keyof typeof MainAdvancedLicense
   code: keyof typeof MainAdvancedLicense
   professional?: {
     minAge: number
@@ -60,6 +61,7 @@ type AdvancedLicenseMapItem = {
 export const advancedLicenseMap: AdvancedLicenseMapItem[] = [
   {
     code: 'C1',
+    group: 'C1',
     minAge: 18,
     professional: {
       code: 'C1A',
@@ -67,7 +69,13 @@ export const advancedLicenseMap: AdvancedLicenseMapItem[] = [
     },
   },
   {
+    code: 'C1E',
+    group: 'C1',
+    minAge: 18,
+  },
+  {
     code: 'D1',
+    group: 'D1',
     minAge: 21,
     professional: {
       code: 'D1A',
@@ -75,7 +83,13 @@ export const advancedLicenseMap: AdvancedLicenseMapItem[] = [
     },
   },
   {
+    code: 'D1E',
+    group: 'D1',
+    minAge: 18,
+  },
+  {
     code: 'C',
+    group: 'C',
     minAge: 21,
     professional: {
       code: 'CA',
@@ -83,7 +97,13 @@ export const advancedLicenseMap: AdvancedLicenseMapItem[] = [
     },
   },
   {
+    code: 'CE',
+    group: 'C',
+    minAge: 18,
+  },
+  {
     code: 'D',
+    group: 'D',
     minAge: 21,
     professional: {
       code: 'DA',
@@ -91,22 +111,23 @@ export const advancedLicenseMap: AdvancedLicenseMapItem[] = [
     },
   },
   {
-    code: 'C1E',
-    minAge: 18,
-  },
-  {
-    code: 'D1E',
-    minAge: 18,
-  },
-  {
-    code: 'CE',
-    minAge: 18,
-  },
-  {
     code: 'DE',
+    group: 'D',
     minAge: 18,
   },
 ]
+
+export const organizedAdvancedLicenseMap = advancedLicenseMap.reduce<
+  Record<string, AdvancedLicenseMapItem[]>
+>((acc, item) => {
+  if (!acc[item.group]) {
+    acc[item.group] = []
+  }
+
+  acc[item.group].push(item)
+
+  return acc
+}, {})
 
 export const CHARGE_ITEM_CODES: Record<string, string> = {
   [B_TEMP]: 'AY114',

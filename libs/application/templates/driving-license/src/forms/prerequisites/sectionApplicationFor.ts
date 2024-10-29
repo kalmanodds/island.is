@@ -118,8 +118,7 @@ export const sectionApplicationFor = (
               if (allowAdvanced) {
                 options = options.concat({
                   label: m.applicationForAdvancedLicenseTitle,
-                  subLabel:
-                    m.applicationForAdvancedLicenseDescription.defaultMessage,
+                  subLabel: m.applicationForAdvancedLicenseDescription,
                   value: B_ADVANCED,
                   disabled: !categories?.some(
                     (c) => c.nr.toUpperCase() === 'B' && c.validToCode !== 8,
